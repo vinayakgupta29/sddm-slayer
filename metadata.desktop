@@ -1,0 +1,12 @@
+[SddmGreeterTheme]
+Name=Great Slayer
+Description=A modern nerd-font based SDDM theme
+Type=sddm-theme
+Version=1.5
+Screenshot=preview.jpg
+MainScript=Main.qml
+ConfigFile=theme.conf
+TranslationsDirectory=translations
+Theme-Id=sequoia
+Theme-API=2.15
+QtVersion=6
