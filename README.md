@@ -1,4 +1,4 @@
-<!--<h2 align='center'>🌲 Sequoia theme for SDDM</h2>
+<!--  <h2 align='center'>🌲 Sequoia theme for SDDM</h2>
 
 <div align='center'>
 <a href='https://www.pling.com/p/2191680/'><img height='36' src='https://www.pling.com/theme/react/assets/img/logo-pling.png' title='Available on Pling' alt='pling.com button'/></a>
@@ -88,4 +88,4 @@ It's quite the time-saver when configuring your `theme.conf` file.
 ## Support
 
 If you want to show support by buying me a coffee or send a tip feel free to visit my ko-fi page ❤️ <br/>
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y0473AA)-->
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y0473AA)  -->
