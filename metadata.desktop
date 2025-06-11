@@ -7,6 +7,6 @@ Screenshot=preview.jpg
 MainScript=Main.qml
 ConfigFile=theme.conf
 TranslationsDirectory=translations
-Theme-Id=sequoia
+Theme-Id=greet-slayer
 Theme-API=2.15
 QtVersion=5
