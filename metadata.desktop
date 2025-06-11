@@ -9,4 +9,4 @@ ConfigFile=theme.conf
 TranslationsDirectory=translations
 Theme-Id=sequoia
 Theme-API=2.15
-QtVersion=6
+QtVersion=5
