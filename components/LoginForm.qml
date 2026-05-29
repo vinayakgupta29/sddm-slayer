@@ -22,7 +22,30 @@ Column {
   }
 
   width: parent.width
+Rectangle {
+    id: avatarFrame
 
+    width: fontSize * 5
+    height: width
+    radius: width / 2
+
+    anchors.horizontalCenter: parent.horizontalCenter
+
+    border.width: 1
+    border.color: root.palette.text
+    color: "transparent"
+
+    clip: true
+
+    Image {
+        anchors.fill: parent
+
+        source: "file:///usr/share/sddm/faces/" + username.text + ".face.icon"
+        fillMode: Image.PreserveCrop
+        smooth: true
+        asynchronous: true
+    }
+}
   TextField {
     id: username
     width: parent.width * 0.5
@@ -199,7 +222,7 @@ Column {
     opacity: 0
 
     renderType: Text.QtRendering
-    color: root.palette.accent
+    color: "#ffff55" //root.palette.accent
     font.pointSize: fontSize * 0.825
     height: fontSize * 3
     verticalAlignment: Qt.AlignVCenter

@@ -5,117 +5,163 @@ import QtQuick.Controls 2.15
 import "common"
 
 ComboBox {
-  id: container
-  property int fontSize: root.font.pointSize
-  background: null
+    id: container
 
-  indicator: Button {
-    anchors.fill: parent
-    Text {
-      anchors.centerIn: parent
-      renderType: Text.QtRendering
-      text: "󰐥"
-      font.family: iconFont
-      color: container.focus ? root.palette.accent : root.palette.text
-      font.pointSize: fontSize * 1.5
-    }
+    property int fontSize: root.font.pointSize
+    property bool forcePowerOptions: false
 
-    background: Rectangle {
-      color: "transparent"
-    }
+    background: null
 
-    onPressed: {
-      container.popup.open()
-    }
-
-  }
-
-  function actionPressed() {
-    if (currentIndex == 0) sddm.suspend();
-    else if (currentIndex == 1) sddm.hibernate();
-    else if (currentIndex == 2) sddm.reboot();
-    else if (currentIndex == 3) sddm.powerOff();
-  }
-
-  property bool forcePowerOptions: false
-
-  model: [
-    {'icon': "", 'label': config.suspend   || text_const.suspend  , 'enabled': sddm.canSuspend  },
-    {'icon': "󰍷", 'label': config.hibernate || text_const.hibernate, 'enabled': sddm.canHibernate},
-    {'icon': "", 'label': config.reboot    || text_const.reboot   , 'enabled': sddm.canReboot   },
-    {'icon': "", 'label': config.poweroff  || text_const.shutdown , 'enabled': sddm.canPowerOff },
-  ]
-  onActivated: {
-    currentIndex = highlightedIndex;
-    actionPressed();
-  }
-
-  delegate: ItemDelegate {
-    id: power_option
-    visible: forcePowerOptions || modelData['enabled']
-
-    implicitHeight: fontSize * 3
-    implicitWidth: content_item.width
-    Layout.fillWidth: true
-
-    Row {
-      id: content_item
-      spacing: fontSize
-      anchors.verticalCenter: power_option.verticalCenter
-      leftPadding: 10
-      rightPadding: 10
-      Text {
-        visible: config.boolValue("iconsInMenus")
-        renderType: Text.QtRendering
-        text: modelData['icon']
-        font.family: iconFont
-        font.pointSize: fontSize
-        color: root.palette.buttonText
-      }
-      Text {
-        id: label
-        renderType: Text.QtRendering
-        text: modelData['label']
-        font.family: root.font.family
-        font.pointSize: fontSize
-        color: root.palette.buttonText
-      }
-    }
-    onClicked: {
-      currentIndex = index;
-    }
-
-    background: Rectangle {
-      color: "transparent"
-    }
-
-    states: [
-      State {
-        name: "selected"
-        when: power_option.activeFocus
-        PropertyChanges {
-          target: power_option.background
-          color: root.palette.accent
+    model: [
+        {
+            icon: "",
+            label: config.suspend || text_const.suspend,
+            enabled: sddm.canSuspend
+        },
+        {
+            icon: "󰍷",
+            label: config.hibernate || text_const.hibernate,
+            enabled: sddm.canHibernate
+        },
+        {
+            icon: "",
+            label: config.reboot || text_const.reboot,
+            enabled: sddm.canReboot
+        },
+        {
+            icon: "",
+            label: config.poweroff || text_const.shutdown,
+            enabled: sddm.canPowerOff
         }
-      },
-      State {
-        name: "highlighted"
-        when: container.highlightedIndex === index
-        PropertyChanges {
-          target: power_option.background
-          color: "#777777"
-          opacity: 0.4
-        }
-      }
     ]
 
-  }
+    textRole: "label"
 
-  popup: PopupPanel {
-    x: (parent.width - width) * !(root.LayoutMirroring.enabled)
-    interactive: false
+    function actionPressed(index) {
+        if (index === 0)
+            sddm.suspend()
+        else if (index === 1)
+            sddm.hibernate()
+        else if (index === 2)
+            sddm.reboot()
+        else if (index === 3)
+            sddm.powerOff()
+    }
 
-    model: container.delegateModel
-  }
+    onActivated: {
+        actionPressed(index)
+    }
+
+    indicator: Item {
+        anchors.fill: parent
+
+        Text {
+            anchors.centerIn: parent
+
+            renderType: Text.QtRendering
+
+            text: "󰐥"
+
+            font.family: iconFont
+            font.pointSize: fontSize * 1.5
+
+            color: container.focus
+                   ? root.accent
+                   : root.palette.text
+        }
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                container.popup.open()
+            }
+        }
+    }
+
+    delegate: ItemDelegate {
+        id: power_option
+
+        required property var model
+
+
+        width: 220
+        height: fontSize * 3
+
+        background: Rectangle {
+            anchors.fill: parent
+
+            radius: 6
+
+            color: power_option.highlighted
+                   ? root.accent
+                   : "transparent"
+        }
+
+        Row {
+            anchors {
+                left: parent.left
+                leftMargin: 12
+                verticalCenter: parent.verticalCenter
+            }
+
+            spacing: fontSize
+
+            Text {
+                visible: config.boolValue("iconsInMenus")
+
+                renderType: Text.QtRendering
+
+                text: model.icon
+
+                font.family: iconFont
+                font.pointSize: fontSize
+
+                color: "white"
+            }
+
+            Text {
+                renderType: Text.QtRendering
+
+                text: model.label
+
+                font.family: root.font.family
+                font.pointSize: fontSize
+
+                color: "white"
+            }
+        }
+
+        onClicked: {
+            container.currentIndex = index
+            container.actionPressed(index)
+            container.popup.close()
+        }
+    }
+
+popup: Popup {
+    y: container.height
+
+    width: 260
+
+    x: -width + container.width
+
+    padding: 6
+
+    background: Rectangle {
+        radius: 8
+        color: root.palette.button
+    }
+
+    contentItem: ListView {
+        clip: true
+
+        implicitHeight: contentHeight
+
+        model: container.delegateModel
+        delegate: container.delegate
+    }
+}
 
 }
+

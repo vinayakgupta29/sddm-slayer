@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
-import QtGraphicalEffects 1.15
+import Qt5Compat.GraphicalEffects
 import SddmComponents 2.0 as SDDM
 //import Fonts 1.0
 
@@ -17,7 +17,7 @@ Pane {
   SDDM.TextConstants {id: text_const}
   
   palette {
-    //accent: config.accentColour
+    accent: config.accentColour
     highlight: config.accentColour
     text: config.primaryColour
     //placeholderText: Qt.lighter(config.primaryColour, 0.6)
@@ -145,7 +145,6 @@ Pane {
                 source:blurBox
                 radius:32
               }
-
               Label {
                 id: label
                 color: root.palette.text

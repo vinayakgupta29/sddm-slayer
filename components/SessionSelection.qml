@@ -5,99 +5,137 @@ import QtQuick.Controls 2.15
 import "common"
 
 ComboBox {
-  id: container
-  property int fontSize: root.font.pointSize
-  background: null
+    id: container
 
-  indicator: Button {
-    anchors.fill: parent
-    Text {
-      anchors.centerIn: parent
-      renderType: Text.QtRendering
-      text: "󰍹"
-      font.family: iconFont
-      color: container.focus ? root.palette.accent : root.palette.text
-      font.pointSize: fontSize * 1.5
+    property int fontSize: root.font.pointSize
 
-      Text {
-        visible: config.boolValue("displaySession")
-        anchors {
-          leftMargin: fontSize
-          left: parent.right
-          verticalCenter: parent.verticalCenter
+    background: null
+
+    model: sessionModel
+    textRole: "name"
+
+    Component.onCompleted: {
+        currentIndex = sessionModel.lastIndex
+    }
+
+    onActivated: {
+        sessionModel.lastIndex = index
+        currentIndex = index
+    }
+
+    indicator: Item {
+        anchors.fill: parent
+
+        Text {
+            anchors.centerIn: parent
+
+            renderType: Text.QtRendering
+
+            text: "󰍹"
+
+            font.family: iconFont
+            font.pointSize: fontSize * 1.5
+
+            color: container.focus
+                   ? root.accent
+                   : root.palette.text
+
+            Text {
+                visible: config.boolValue("displaySession")
+
+                anchors {
+                    left: parent.right
+                    leftMargin: fontSize
+                    verticalCenter: parent.verticalCenter
+                }
+
+                renderType: Text.QtRendering
+
+                text: container.currentText
+
+                font.family: root.font.family
+                font.pointSize: fontSize
+
+                color: root.palette.text
+            }
         }
-        renderType: Text.QtRendering
-        text: container.currentText
-        font.family: root.font.family
-        color: root.palette.text
-        font.pointSize: fontSize
-      }
-    }
 
-    background: Rectangle {
-      color: "transparent"
-    }
+        MouseArea {
+            anchors.fill: parent
 
-    onPressed: {
-      container.popup.open()
-    }
+            hoverEnabled: true
 
-  }
-
-  model: sessionModel
-  currentIndex: model.lastIndex
-  textRole: "name"
-  onActivated: currentIndex = highlightedIndex
-
-  delegate: ItemDelegate {
-    id: session_item
-    highlighted: container.currentIndex === index
-
-    implicitHeight: fontSize * 3
-    implicitWidth: label.width
-    Layout.fillWidth: true
-
-    Text {
-      id: label
-      padding: 10
-      anchors.verticalCenter: session_item.verticalCenter
-
-      renderType: Text.QtRendering
-      text: name
-      font.family: root.font.family
-      font.pointSize: fontSize
-      color: root.palette.buttonText
-    }
-
-    background: Rectangle {
-      color: "transparent"
-    }
-
-    states: [
-      State {
-        name: "selected"
-        when: session_item.highlighted
-        PropertyChanges {
-          target: session_item.background
-          color: root.palette.accent
+            onClicked: {
+                container.popup.open()
+            }
         }
-      },
-      State {
-        name: "highlighted"
-        when: container.highlightedIndex === index
-        PropertyChanges {
-          target: session_item.background
-          color: "#777777"
-          opacity: 0.4
+    }
+
+    delegate: ItemDelegate {
+        id: session_item
+
+        highlighted: container.currentIndex === index
+
+        implicitHeight: fontSize * 3
+        implicitWidth: label.width
+
+        Layout.fillWidth: true
+
+        background: Rectangle {
+            radius: 6
+
+            color: session_item.highlighted
+                   ? root.accent
+                   : "transparent"
+
+            opacity: container.highlightedIndex === index
+                     ? 0.4
+                     : 1
         }
-      }
-    ]
 
-  }
+        Text {
+            id: label
 
-  popup: PopupPanel {
-    x: (parent.width - width) * root.LayoutMirroring.enabled
+            padding: 10
 
-    model: container.delegateModel
-  }
+            anchors.verticalCenter: parent.verticalCenter
+
+            renderType: Text.QtRendering
+
+            text: name
+
+            font.family: root.font.family
+            font.pointSize: fontSize
+
+            color: root.palette.buttonText
+        }
+
+        onClicked: {
+            container.currentIndex = index
+            sessionModel.lastIndex = index
+            container.popup.close()
+        }
+    }
+
+    popup: Popup {
+        y: container.height
+
+        width: 220
+
+        padding: 0
+
+        background: Rectangle {
+            radius: 8
+            color: root.palette.button
+        }
+
+        contentItem: ListView {
+            clip: true
+
+            implicitHeight: contentHeight
+
+            model: container.delegateModel
+            delegate: container.delegate
+        }
+    }
 }

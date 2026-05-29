@@ -9,4 +9,4 @@ ConfigFile=theme.conf
 TranslationsDirectory=translations
 Theme-Id=greet-slayer
 Theme-API=2.15
-QtVersion=5
+QtVersion=6
