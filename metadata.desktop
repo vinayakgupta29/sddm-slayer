@@ -2,11 +2,11 @@
 Name=Greet_Slayer
 Description=A modern nerd-font based SDDM theme
 Type=sddm-theme
-Version=1.5
-Screenshot=preview.jpg
+Version=2.0
+Screensht=preview.jpg
 MainScript=Main.qml
 ConfigFile=theme.conf
 TranslationsDirectory=translations
-Theme-Id=greet-slayer
+Theme-Id=sddm-greet-slayer
 Theme-API=2.15
 QtVersion=6

@@ -1,14 +1,9 @@
-<!--  <h2 align='center'>🌲 Sequoia theme for SDDM</h2>
+ <h2 align='center'>🌲 Atago theme for SDDM (SDDM Slayer)</h2>
 
-<div align='center'>
-<a href='https://www.pling.com/p/2191680/'><img height='36' src='https://www.pling.com/theme/react/assets/img/logo-pling.png' title='Available on Pling' alt='pling.com button'/></a>
-<a href='https://ko-fi.com/Y8Y0473AA' target='_blank'><img height='36' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' title='Buy Me a Coffee at ko-fi.com' alt='ko-fi.com button' /></a>
-</div>
+![theme-preview](./previews/2026-06-12-093424_hyprshot.png "Preview")
+![session-menu](./previews/2026-06-12-093410_hyprshot.png "Session selection")
 
-![theme-preview](https://codeberg.org/minMelody/sddm-sequoia/raw/branch/main/preview.png "Preview")
-![session-menu](https://images.pling.com/img/00/00/80/66/42/2191680/session-select.png "Session selection")
-
-Sequoia is a modern eye-candy theme for SDDM, making use of Nerd Fonts for its icons.
+SDDM-Slayer is a modern eye-candy theme for SDDM, making use of Nerd Fonts for its icons.
 
 Written from scratch, it is primarily made for standalone SDDM, aiming to be customisable with accessibility options.
 
@@ -29,16 +24,16 @@ Written from scratch, it is primarily made for standalone SDDM, aiming to be cus
 
 1- Clone this repository and delete the `.git` folder
 ```
-$ git clone https://codeberg.org/minMelody/sddm-sequoia.git ~/sequoia && rm -rf ~/sequoia/.git
+$ git clone https://github.com/vinayakgupta29/sddm-slayer.git ~/sddm-slayer && rm -rf ~/sddm-slayer/.git
 ```
 
 2- Move the resulting directory to your theme directory
 ```
-$ sudo mv ~/sequoia /usr/share/sddm/themes/
+$ sudo mv ~/sddm-slayer /usr/share/sddm/themes/
 ```
 </details>
 
-<details> <summary><h6>Install by downloading an archive on pling</h6></summary>
+<!-- <details> <summary><h6>Install by downloading an archive on pling</h6></summary> 
 
 1- Go to [the theme's page](https://www.pling.com/p/2191680/) on pling.com and download a release from the `Files` tab
 
@@ -48,7 +43,7 @@ $ sudo tar -xzvf ~/sequoia.tar.gz -C /usr/share/sddm/themes
 ```
 </details>
 
-*Click on an installation method above for steps 1 -> 2*
+*Click on an installation method above for steps 1 -> 2* -->
 
 3- Edit your [SDDM config file](https://man.archlinux.org/man/sddm.conf.5), under `[Theme]` change `Current=` to `Current=sequoia`
 
@@ -56,7 +51,7 @@ It should look like this:
 
 ```conf
 [Theme]
-Current=sequoia
+Current=sddm-slayer
 ```
 
 > [!IMPORTANT]
@@ -85,7 +80,8 @@ $ sddm-greeter-qt6 --test-mode --theme /path/to/your/theme
 
 It's quite the time-saver when configuring your `theme.conf` file.
 
-## Support
+<!-- ## Support -->
 
-If you want to show support by buying me a coffee or send a tip feel free to visit my ko-fi page ❤️ <br/>
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y0473AA)  -->
+## LICENSE 
+
+    GPL v3.0
